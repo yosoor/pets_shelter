@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="mb-4">Животные в приюте</h1>
+
+    <div class="mb-4">
+        <a href="{{ url_for('add_pet') }}" class="btn btn-success">Добавить животное</a>
+    </div>
+
+    {% if pets %}
+        <div class="list-group">
+            {% for pet in pets %}
+                <div class="list-group-item pet-card">
+                    <h5 class="mb-1">Имя: {{ pet.name }}</h5>
+                    <p class="mb-1">Вид: <strong>{{ pet.species }}</strong></p>
+                    <p class="mb-1">Возраст: {{ pet.age or 'неизвестно' }} лет</p>
+                    <div>
+                        <a href="{{ url_for('edit_pet', id=pet.id) }}" class="btn btn-sm btn-primary">Редактировать</a>
+                        <a href="{{ url_for('delete_pet', id=pet.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Удалить это животное?')">Удалить</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Нет животных в приюте.</p>
+    {% endif %}
+{% endblock %}
